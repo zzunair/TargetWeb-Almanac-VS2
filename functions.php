@@ -8,6 +8,19 @@
 // each update -- no manual version bump, no "why isn't my change showing".
 define( 'VSS_VERSION', '1.0.0-' . filemtime( get_template_directory() . '/style.css' ) );
 
+if ( ! function_exists( 'tw_main_menu_args' ) ) {
+	function tw_main_menu_args( $args = array() ) {
+		$menu = wp_get_nav_menu_object( 'Main Menu' );
+		if ( ! $menu ) {
+			$menu = wp_get_nav_menu_object( 'main-menu' );
+		}
+		if ( $menu ) {
+			$args['menu'] = (int) $menu->term_id;
+		}
+		return $args;
+	}
+}
+
 require_once get_template_directory() . '/inc/section-defs.php';
 require_once get_template_directory() . '/inc/template-functions.php';
 require_once get_template_directory() . '/inc/customizer.php';
@@ -47,7 +60,10 @@ add_action( 'after_switch_theme', 'vss_flush_permalinks_on_activation' );
 function vss_enqueue_assets() {
 	$font = get_theme_mod( 'vss_font_family', 'Manrope' );
 	wp_enqueue_style( 'vss-fonts', vss_google_font_url( $font ), array(), null );
-	wp_enqueue_style( 'vss-style', get_stylesheet_uri(), array(), VSS_VERSION );
+	wp_enqueue_style( 'vss-style', get_template_directory_uri() . '/style.css', array(), VSS_VERSION );
+	if ( get_stylesheet() !== get_template() ) {
+		wp_enqueue_style( 'vss-child-style', get_stylesheet_uri(), array( 'vss-style' ), wp_get_theme()->get( 'Version' ) );
+	}
 	$script_deps = ( function_exists( 'vss_ecommerce_enabled' ) && vss_ecommerce_enabled() ) ? array( 'jquery' ) : array();
 	wp_enqueue_script( 'vss-frontend', get_template_directory_uri() . '/assets/js/frontend.js', $script_deps, VSS_VERSION, true );
 	wp_localize_script(

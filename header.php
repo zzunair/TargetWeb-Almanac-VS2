@@ -47,13 +47,16 @@ $reserve_link = get_theme_mod( 'vss_header_reserve_button_link', '/shop/' );
 				$logo_max_width  = max( 1, (int) get_theme_mod( 'vss_header_logo_max_width', 180 ) );
 				$logo_max_height = max( 1, (int) get_theme_mod( 'vss_header_logo_max_height', 50 ) );
 				?>
-				<img src="<?php echo esc_url( $logo_image ); ?>" alt="<?php echo esc_attr( get_theme_mod( 'vss_header_logo_text', get_bloginfo( 'name' ) ) ); ?>" class="tw-logo-image" style="max-width:<?php echo $logo_max_width; ?>px;max-height:<?php echo $logo_max_height; ?>px;" />
+				<?php $vss_logo_text = get_theme_mod( 'vss_header_logo_text', 'MowtivatedPwr' ); ?>
+				<?php $vss_logo_text = trim( (string) $vss_logo_text ) !== '' ? $vss_logo_text : 'MowtivatedPwr'; ?>
+				<img src="<?php echo esc_url( $logo_image ); ?>" alt="<?php echo esc_attr( $vss_logo_text ); ?>" class="tw-logo-image" style="max-width:<?php echo $logo_max_width; ?>px;max-height:<?php echo $logo_max_height; ?>px;" />
 			<?php else : ?>
 				<span class="tw-logo-mark" aria-hidden="true">
 					<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--tw-dark)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18l5-9 4 6 3-4 6 7"/></svg>
 				</span>
 				<span class="tw-logo-lockup">
-					<span class="tw-logo-text"><?php echo esc_html( get_theme_mod( 'vss_header_logo_text', get_bloginfo( 'name' ) ) ); ?></span>
+					<?php $vss_logo_text = get_theme_mod( 'vss_header_logo_text', 'MowtivatedPwr' ); ?>
+					<span class="tw-logo-text"><?php echo esc_html( trim( (string) $vss_logo_text ) !== '' ? $vss_logo_text : 'MowtivatedPwr' ); ?></span>
 					<?php $tagline = get_theme_mod( 'vss_header_logo_tagline', 'Power Equipment' ); ?>
 					<?php if ( $tagline ) : ?>
 						<span class="tw-logo-tagline"><?php echo esc_html( $tagline ); ?></span>
@@ -79,26 +82,18 @@ $reserve_link = get_theme_mod( 'vss_header_reserve_button_link', '/shop/' );
 				</button>
 			</div>
 			<nav class="tw-nav" aria-label="Primary">
-				<?php if ( has_nav_menu( 'primary' ) ) : ?>
-					<?php
-					wp_nav_menu(
+				<?php
+				wp_nav_menu(
+					tw_main_menu_args(
 						array(
 							'theme_location' => 'primary',
 							'container'      => false,
 							'depth'          => 1,
+							'fallback_cb'    => false,
 						)
-					);
-					?>
-				<?php else : ?>
-					<ul>
-						<li><a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="<?php echo 'home' === $current_page ? 'is-active' : ''; ?>">Home</a></li>
-						<li><a href="<?php echo esc_url( function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/shop/' ) ); ?>" class="<?php echo 'shop' === $current_page ? 'is-active' : ''; ?>">Shop</a></li>
-						<li><a href="<?php echo esc_url( home_url( '/service/' ) ); ?>" class="<?php echo 'service' === $current_page ? 'is-active' : ''; ?>">Service</a></li>
-						<li><a href="<?php echo esc_url( home_url( '/financing/' ) ); ?>" class="<?php echo 'financing' === $current_page ? 'is-active' : ''; ?>">Financing</a></li>
-						<li><a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>" class="<?php echo 'contact' === $current_page ? 'is-active' : ''; ?>">Contact</a></li>
-						<li><a href="<?php echo esc_url( home_url( '/about/' ) ); ?>" class="<?php echo 'about' === $current_page ? 'is-active' : ''; ?>">About</a></li>
-					</ul>
-				<?php endif; ?>
+					)
+				);
+				?>
 			</nav>
 			<div class="tw-drawer-foot tw-drawer-only">
 				<?php if ( $reserve_text ) : ?>

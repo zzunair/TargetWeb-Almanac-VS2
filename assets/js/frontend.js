@@ -260,7 +260,7 @@
 				.map( function ( p ) {
 					var img = p.image
 						? '<img src="' + escapeHtml( p.image ) + '" alt="" />'
-						: '<span class="tw-search-suggestion-noimg"></span>';
+						: '<span class="tw-search-suggestion-noimg">Product Image Coming Soon</span>';
 					return (
 						'<a class="tw-search-suggestion" href="' + escapeHtml( p.url ) + '">' +
 						img +

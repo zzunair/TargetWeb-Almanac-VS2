@@ -1,7 +1,7 @@
 /*
 Theme Name: TargetWeb - Almanac
 Author: TargetWeb
-Description: Showroom theme for local equipment dealers. Every page is built from reorderable sections managed in the Customizer. WooCommerce powers the catalog, with optional cart and checkout.
+Description: Parent theme for Almanac dealer sites. VS2-Child can replace the header, footer, and homepage sections. Every page is built from reorderable sections managed in the Customizer. WooCommerce powers the catalog, with optional cart and checkout.
 Version: 1.0.0
 Requires at least: 6.0
 Requires PHP: 7.4
@@ -151,7 +151,10 @@ h1, h2, h3, h4, h5, h6 { text-transform: uppercase; }
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	font-size:0.8125rem;
+	padding: 16px;
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 1.35;
 	text-align: center;
 }
 
@@ -540,7 +543,7 @@ body.tw-search-open { overflow: hidden; }
 }
 
 .tw-search-suggestion img { background: #fff; }
-.tw-search-suggestion-noimg { background: var( --tw-placeholder-bg ); }
+.tw-search-suggestion-noimg { display: flex; align-items: center; justify-content: center; padding: 3px; background: var( --tw-placeholder-bg ); color: var( --tw-placeholder-text ); font-size: 7px; font-weight: 600; line-height: 1.15; text-align: center; }
 
 .tw-search-suggestion-info {
 	display: flex;

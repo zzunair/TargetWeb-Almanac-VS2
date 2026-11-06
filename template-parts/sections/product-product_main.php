@@ -27,7 +27,7 @@ $thumb_ids = array_values( array_unique( array_filter( array_merge( array( $main
 		<?php if ( $main_image_id ) : ?>
 			<div class="tw-gallery-main" id="tw-gallery-main"><?php echo wp_get_attachment_image( $main_image_id, 'large', false, vss_image_attrs( $main_image_id, $product->get_name(), array( 'style' => 'width:100%;height:100%;object-fit:cover;border-radius:20px;', 'loading' => 'eager', 'fetchpriority' => 'high' ) ) ); ?></div>
 		<?php else : ?>
-			<div class="tw-gallery-main tw-placeholder"><?php echo esc_html( vss_field( 'product', 'product_main', 'main_photo_placeholder' ) ); ?></div>
+			<div class="tw-gallery-main tw-placeholder">Product Image Coming Soon</div>
 		<?php endif; ?>
 		<?php if ( count( $thumb_ids ) > 1 ) : ?>
 			<div class="tw-gallery-thumbs" data-tw-gallery>
