@@ -27,7 +27,7 @@ $thumb_ids = array_values( array_unique( array_filter( array_merge( array( $main
 		<?php if ( $main_image_id ) : ?>
 			<div class="tw-gallery-main" id="tw-gallery-main"><?php echo wp_get_attachment_image( $main_image_id, 'large', false, vss_image_attrs( $main_image_id, $product->get_name(), array( 'style' => 'width:100%;height:100%;object-fit:cover;border-radius:20px;', 'loading' => 'eager', 'fetchpriority' => 'high' ) ) ); ?></div>
 		<?php else : ?>
-			<div class="tw-gallery-main tw-placeholder"><?php echo esc_html( vss_field( 'product', 'product_main', 'main_photo_placeholder' ) ); ?></div>
+			<div class="tw-gallery-main tw-placeholder">Product Image Coming Soon</div>
 		<?php endif; ?>
 		<?php if ( count( $thumb_ids ) > 1 ) : ?>
 			<div class="tw-gallery-thumbs" data-tw-gallery>
@@ -96,28 +96,9 @@ $thumb_ids = array_values( array_unique( array_filter( array_merge( array( $main
 				<div class="tw-reserve-form">
 					<div class="tw-reserve-heading"<?php echo $selling ? ' id="tw-request-title"' : ''; ?>><?php echo esc_html( vss_field( 'product', 'product_main', 'reserve_heading' ) ); ?></div>
 					<p class="tw-reserve-intro"><?php echo esc_html( vss_field( 'product', 'product_main', 'reserve_intro' ) ); ?></p>
-					<div class="tw-form">
-						<label class="tw-field"><?php echo esc_html( vss_field( 'product', 'product_main', 'name_label' ) ); ?>
-							<input type="text" class="tw-reserve-name-input" placeholder="<?php echo esc_attr( vss_field( 'product', 'product_main', 'name_placeholder' ) ); ?>" />
-						</label>
-						<label class="tw-field"><?php echo esc_html( vss_field( 'product', 'product_main', 'phone_label' ) ); ?>
-							<input type="tel" placeholder="<?php echo esc_attr( vss_field( 'product', 'product_main', 'phone_placeholder' ) ); ?>" />
-						</label>
-						<label class="tw-field"><?php echo esc_html( vss_field( 'product', 'product_main', 'email_label' ) ); ?>
-							<input type="email" placeholder="<?php echo esc_attr( vss_field( 'product', 'product_main', 'email_placeholder' ) ); ?>" />
-						</label>
-						<label class="tw-field"><?php echo esc_html( vss_field( 'product', 'product_main', 'notes_label' ) ); ?> <span style="color:var(--tw-text-faint);font-weight:400;font-size:0.6875rem;">(optional)</span>
-							<textarea placeholder="<?php echo esc_attr( vss_field( 'product', 'product_main', 'notes_placeholder' ) ); ?>" rows="3"></textarea>
-						</label>
-						<button type="button" class="tw-btn tw-btn-primary tw-reserve-submit" style="width:fit-content;"><?php echo esc_html( vss_field( 'product', 'product_main', 'reserve_button_text' ) ); ?></button>
+					<div id="tw-crm-popup" class="tw-reserve-lead-form" data-tw-crm-inline data-product-id="<?php echo esc_attr( $product->get_id() ); ?>">
+						<div id="leads-form-div"></div>
 					</div>
-				</div>
-
-				<div class="tw-reserve-success tw-hidden">
-					<span class="tw-reserve-success-icon">&#10003;</span>
-					<div class="tw-reserve-success-title"><?php echo esc_html( vss_field( 'product', 'product_main', 'success_heading' ) ); ?></div>
-					<p class="tw-reserve-success-text" data-template="<?php echo esc_attr( vss_field( 'product', 'product_main', 'success_text' ) ); ?>"></p>
-					<button type="button" class="tw-btn tw-btn-outline tw-reserve-reset" style="margin-top:6px;"><?php echo esc_html( vss_field( 'product', 'product_main', 'reset_button_text' ) ); ?></button>
 				</div>
 			<?php else : ?>
 				<div class="tw-reserve-heading"<?php echo $selling ? ' id="tw-request-title"' : ''; ?>><?php echo esc_html( vss_field( 'product', 'product_main', 'outofstock_heading' ) ); ?></div>

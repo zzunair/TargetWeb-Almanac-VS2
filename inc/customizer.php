@@ -374,7 +374,7 @@ function vss_customize_register( $wp_customize ) {
 		'logo_image'           => array( 'label' => 'Logo image (leave empty to keep the text logo below)', 'default' => '', 'type' => 'image' ),
 		'logo_max_width'       => array( 'label' => 'Logo image max width (px)', 'default' => 180, 'type' => 'range', 'input_attrs' => array( 'min' => 40, 'max' => 400, 'step' => 5 ) ),
 		'logo_max_height'      => array( 'label' => 'Logo image max height (px)', 'default' => 50, 'type' => 'range', 'input_attrs' => array( 'min' => 20, 'max' => 150, 'step' => 5 ) ),
-		'logo_text'            => array( 'label' => 'Logo text', 'default' => get_bloginfo( 'name' ), 'type' => 'text' ),
+		'logo_text'            => array( 'label' => 'Logo text', 'default' => 'MowtivatedPwr', 'type' => 'text' ),
 		'logo_tagline'         => array( 'label' => 'Logo tagline (small text under the logo, optional)', 'default' => 'Power Equipment', 'type' => 'text' ),
 		'search_placeholder'   => array( 'label' => 'Search placeholder', 'default' => 'Search products', 'type' => 'text' ),
 		'search_button_text'   => array( 'label' => 'Search button text', 'default' => 'Search', 'type' => 'text' ),

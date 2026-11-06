@@ -1,7 +1,7 @@
 /*
 Theme Name: TargetWeb - Almanac
 Author: TargetWeb
-Description: Showroom theme for local equipment dealers. Every page is built from reorderable sections managed in the Customizer. WooCommerce powers the catalog, with optional cart and checkout.
+Description: Parent theme for Almanac dealer sites. VS2-Child can replace the header, footer, and homepage sections. Every page is built from reorderable sections managed in the Customizer. WooCommerce powers the catalog, with optional cart and checkout.
 Version: 1.0.0
 Requires at least: 6.0
 Requires PHP: 7.4
@@ -151,7 +151,10 @@ h1, h2, h3, h4, h5, h6 { text-transform: uppercase; }
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	font-size:0.8125rem;
+	padding: 16px;
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 1.35;
 	text-align: center;
 }
 
@@ -540,7 +543,7 @@ body.tw-search-open { overflow: hidden; }
 }
 
 .tw-search-suggestion img { background: #fff; }
-.tw-search-suggestion-noimg { background: var( --tw-placeholder-bg ); }
+.tw-search-suggestion-noimg { display: flex; align-items: center; justify-content: center; padding: 3px; background: var( --tw-placeholder-bg ); color: var( --tw-placeholder-text ); font-size: 7px; font-weight: 600; line-height: 1.15; text-align: center; }
 
 .tw-search-suggestion-info {
 	display: flex;
@@ -1641,6 +1644,8 @@ body.tw-search-open { overflow: hidden; }
 /* ---------- Forms ---------- */
 
 .tw-form { display: flex; flex-direction: column; gap: 16px; }
+.tw-form-error { color: #9b2c2c; margin: 0; }
+.tw-form-success h3 { margin-bottom: 6px; }
 
 .tw-field {
 	display: flex;
@@ -1917,6 +1922,46 @@ body.tw-search-open { overflow: hidden; }
 
 .tw-reserve-success-title { font-size:1.0625rem; font-weight: 700; margin: 0; }
 .tw-reserve-success-text { font-size:0.875rem; line-height: 1.6; color: var( --tw-text-muted ); margin: 0; }
+
+/* The CRM plugin hides #tw-crm-popup inline after a submit; this form lives in the page. */
+.tw-reserve-box #tw-crm-popup[data-tw-crm-inline] {
+	display: block !important;
+	position: static;
+	inset: auto;
+	z-index: auto;
+	padding: 0;
+	background: transparent;
+}
+.tw-reserve-box #tw-crm-popup[data-tw-crm-inline] .tw-crm-form__title,
+.tw-reserve-box #tw-crm-popup[data-tw-crm-inline] .tw-crm-popup__close {
+	display: none;
+}
+.tw-reserve-box #tw-crm-popup[data-tw-crm-inline] .tw-crm-form__field label {
+	font-size: 0.75rem;
+	font-weight: 700;
+	color: var(--tw-text-muted);
+}
+.tw-reserve-box #tw-crm-popup[data-tw-crm-inline] .tw-crm-form__field input,
+.tw-reserve-box #tw-crm-popup[data-tw-crm-inline] .tw-crm-form__field textarea,
+.tw-reserve-box #tw-crm-popup[data-tw-crm-inline] .tw-crm-form__field select {
+	width: 100%;
+	border: 1px solid var(--tw-border-input, #d9d0c7);
+	border-radius: 12px;
+	padding: 12px 14px;
+	background: #fff;
+	color: var(--tw-text, #241c16);
+}
+.tw-reserve-box #tw-crm-popup[data-tw-crm-inline] .tw-crm-form__submit {
+	width: fit-content;
+	border: 0;
+	border-radius: 999px;
+	background: var(--tw-accent);
+	color: #fff;
+	text-transform: none;
+	letter-spacing: 0;
+	padding: 12px 22px;
+	cursor: pointer;
+}
 
 .tw-request-open {
 	align-self: flex-start;

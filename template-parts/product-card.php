@@ -12,7 +12,7 @@ $brand_terms = wc_get_product_terms( $product->get_id(), 'product_brand', array(
 $brand = $brand_terms ? $brand_terms[0] : '';
 $cat_terms = vss_product_categories( $product->get_id() );
 $image_id = $product->get_image_id();
-$image_label = $cat_terms ? rtrim( $cat_terms[0], 's' ) . ' Photo' : 'Product Photo';
+$image_label = 'Product Image Coming Soon';
 $compare_on = get_theme_mod( 'vss_compare_enabled', true );
 $selling    = function_exists( 'vss_ecommerce_enabled' ) && vss_ecommerce_enabled();
 ?>

@@ -1,7 +1,6 @@
 /**
- * Front-end behaviour that has no server side: the product "reserve" form
- * and the contact form only ever flip local UI state. This site never
- * processes a transaction or a real submission -- by design.
+ * Front-end behaviour. The product request form is rendered and submitted
+ * by the TargetWeb CRM plugin; the contact form posts to admin-ajax.
  */
 ( function () {
 	'use strict';
@@ -110,38 +109,6 @@
 		} );
 	}
 
-	document.querySelectorAll( '.tw-reserve-box' ).forEach( function ( box ) {
-		var form       = box.querySelector( '.tw-reserve-form' );
-		var success    = box.querySelector( '.tw-reserve-success' );
-		var nameInput  = box.querySelector( '.tw-reserve-name-input' );
-		var successText = box.querySelector( '.tw-reserve-success-text' );
-		var template   = successText ? successText.getAttribute( 'data-template' ) : '';
-		var submitBtn  = box.querySelector( '.tw-reserve-submit' );
-		var resetBtn   = box.querySelector( '.tw-reserve-reset' );
-
-		if ( submitBtn ) {
-			submitBtn.addEventListener( 'click', function ( e ) {
-				e.preventDefault();
-				var name = nameInput ? nameInput.value.trim() : '';
-				var thanksName = name ? ', ' + name : '';
-				if ( successText ) {
-					successText.textContent = template.replace( '{name}', thanksName );
-				}
-				if ( form ) form.classList.add( 'tw-hidden' );
-				if ( success ) success.classList.remove( 'tw-hidden' );
-			} );
-		}
-
-		if ( resetBtn ) {
-			resetBtn.addEventListener( 'click', function ( e ) {
-				e.preventDefault();
-				if ( nameInput ) nameInput.value = '';
-				if ( success ) success.classList.add( 'tw-hidden' );
-				if ( form ) form.classList.remove( 'tw-hidden' );
-			} );
-		}
-	} );
-
 	var requestOpen = document.querySelector( '.tw-request-open' );
 	var requestOverlay = document.getElementById( 'tw-request-modal' );
 	if ( requestOpen && requestOverlay ) {
@@ -186,6 +153,50 @@
 	document.querySelectorAll( '.tw-contact-form' ).forEach( function ( form ) {
 		form.addEventListener( 'submit', function ( e ) {
 			e.preventDefault();
+			var error = form.querySelector( '[data-contact-error]' );
+			var success = form.querySelector( '[data-contact-success]' );
+			var submit = form.querySelector( '[type="submit"]' );
+			if ( error ) {
+				error.hidden = true;
+			}
+			if ( ! window.vssContactForm ) {
+				if ( error ) {
+					error.hidden = false;
+				}
+				return;
+			}
+			submit.disabled = true;
+			var formData = new FormData( form );
+			formData.append( 'action', 'vss_contact_message' );
+			formData.append( 'nonce', window.vssContactForm.nonce );
+			window.fetch( window.vssContactForm.ajaxUrl, {
+				method: 'POST',
+				credentials: 'same-origin',
+				body: formData
+			} )
+				.then( function ( response ) {
+					return response.json().then( function ( payload ) {
+						if ( ! response.ok || ! payload.success ) {
+							throw new Error( 'Request failed' );
+						}
+					} );
+				} )
+				.then( function () {
+					form.querySelectorAll( '.tw-field, [type="submit"], [data-contact-error]' ).forEach( function ( field ) {
+						field.hidden = true;
+					} );
+					if ( success ) {
+						success.hidden = false;
+					}
+				} )
+				.catch( function () {
+					if ( error ) {
+						error.hidden = false;
+					}
+				} )
+				.finally( function () {
+					submit.disabled = false;
+				} );
 		} );
 	} );
 
@@ -249,7 +260,7 @@
 				.map( function ( p ) {
 					var img = p.image
 						? '<img src="' + escapeHtml( p.image ) + '" alt="" />'
-						: '<span class="tw-search-suggestion-noimg"></span>';
+						: '<span class="tw-search-suggestion-noimg">Product Image Coming Soon</span>';
 					return (
 						'<a class="tw-search-suggestion" href="' + escapeHtml( p.url ) + '">' +
 						img +
